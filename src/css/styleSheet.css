@@ -1,0 +1,113 @@
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+  .color {
+    color: #F00;
+  }
+}
+
+
+/*
+tablesPP{
+    background-image: url("/img/mapOfearth.png");
+    width: 100%;
+    height:100%;
+    vertical-align: middle;
+}
+*/
+
+.keyText {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+.disNameAndDef {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+}
+
+.infoTitle {
+  font-size: 20px;
+}
+
+.infoType {
+  cursor: pointer;
+}
+
+.infoText {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  fill: #ffffff;
+}
+
+body {
+  background-image: url("../img/mapOfearth.png");
+}
+
+.standardSize {
+  height: 600px;
+  border: none !important;
+}
+
+/*Container info*/
+
+.boxSecInfo {
+  height: 100px;
+  /*min-width: 500px;*/
+}
+
+.boxGH {
+  border: 1px solid blueviolet;
+  display: inline-block;
+  float: left;
+}
+
+.boxST {
+  border: 1px solid red;
+  height: 600px;
+  float: left;
+}
+
+.boxIT {
+  border: 1px solid orange;
+  display: inline-block;
+  float: left;
+}
+
+.boxAl {
+  border: 1px solid brown;
+  float: left;
+}
+
+.boxJV {
+  border: 1px solid brown;
+  float: left;
+}
+
+.boxInfo {
+  border: 1px dashed black;
+  float: left;
+  min-width: 500px;
+  margin-left: 10px;
+}
+
+svg {
+  display: block;
+  margin: auto;
+}
+
+.elem {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.elemText {
+  display: inline-block;
+  color: floralwhite;
+  cursor: pointer;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.elemTextGone {
+  cursor: default;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
