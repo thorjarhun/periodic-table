@@ -7,6 +7,22 @@ $.getJSON("data.json", function(data) {
 });
 
 function init(schema) {
+  // comment to leak globals
+  //var appear, rectInfo;
+  
+  var partners = {};
+  // SkyTeam (ST)
+  // Ground Handling (GH)
+  // Alliance (AL)
+  // Joint Venture (JV)
+  // Interline through check in (TC)
+
+  _.forEach(schema, function(v) {
+    if (v.PartnerType) {
+      partners[v.PartnerType.slice(0,2)] = v;
+    }
+  });
+
   //Arrays for partner types
   var skyTeam = [];
   var groundH = [];
@@ -50,27 +66,30 @@ function init(schema) {
   var divSizeJV = $(".boxJV").width();
   var divSizeInfo = $(".boxInfo").width();
   var svgGH = d3.select(".boxGH").append("svg")
-    .attr("class", "planeGH")
-    .attr("height", "100%")
-    .attr("width", divSizeGH);
+     .attr("height", "100%")
+    // .attr("width", "100%");
   var svgST = d3.select(".boxST").append("svg")
-    .attr("height", "100%")
-    .attr("width", "100%");
+     .attr("height", "100%")
+    // .attr("width", "100%");
   var svgIT = d3.select(".boxIT").append("svg")
-    .attr("height", "100%")
-    .attr("width", divSizeIT);
+     .attr("height", "100%")
+    // .attr("width", "100%");
   var svgAl = d3.select(".boxAl").append("svg")
     .attr("height", "100%")
-    .attr("width", "100%");
+    // .attr("width", "100%");
   var svgJV = d3.select(".boxJV").append("svg")
     .attr("height", "100%")
-    .attr("width", "100%");
+    // .attr("width", "100%");
   var svgInfo = d3.select(".boxInfo").append("svg")
     .attr("height", "100%")
     .attr("width", "100%");
   var svgSecInfo = d3.select(".boxSecInfo").append("svg")
     .attr("height", "100%")
     .attr("width", "100%");
+
+  var appendSVG = function(selector) {
+
+  };
 
   var secInfo = ["ITCI", "Ground Handled", "Alliance", "SkyTeam", "Joint Venture"];
 
@@ -94,7 +113,7 @@ function init(schema) {
     .attr("width", w)
     .attr("opacity", "1")
     .attr("x", function(d, i) {
-      return (i + 1) * 15 + "%"
+      return (i + 1) * 15 + "%";
     })
     .attr("y", "30%")
     .attr("fill", function(d, i) {
@@ -116,8 +135,7 @@ function init(schema) {
       return d;
     })
     .attr("x", function(d, i) {
-
-      return (((i + 1) * 15) + 6) + "%"
+      return (((i + 1) * 15) + 6) + "%";
     })
     .attr("y", "57%");
 
@@ -143,7 +161,6 @@ function init(schema) {
 
   var nameAndDef = d3.select(".disNameAndDef");
 
-
   function displayAllKeys() {
     d3.selectAll(".keys")
       .transition()
@@ -155,13 +172,11 @@ function init(schema) {
       .attr("opacity", "1");
   }
 
-
-
   //Determines how the key information is displayed
   function keyDisplay(box) {
     if (appear) {
       //if the information box is not visible display a key at a time
-      if (box != null) {
+      if (box) {
         d3.selectAll(".keys")
           .transition()
           .duration(500)
@@ -178,7 +193,7 @@ function init(schema) {
         .attr("x", "45%");
     } else {
       //If it is visible display all of the keys
-      displayAllKeys()
+      displayAllKeys();
         /*  d3.selectAll(".keys")
               .transition()
               .duration(500)
@@ -191,23 +206,8 @@ function init(schema) {
       nameAndDef.text("To close the information window click the window or the table")
         .attr("x", "30%")
         .attr("y", "20%");
-
-
-
     }
-
   }
-  //Gets the names of the elements and displays them in the key area
-  function disSecInfo(d) {
-    nameAndDef.transition()
-      .duration(100)
-      .attr("opacity", "0")
-      .delay(101)
-      .attr("opacity", "1")
-      .text(d);
-  }
-
-
 
   //Fade the selected key indicator in and out
   $(".boxGH").mouseenter(function() {
@@ -227,28 +227,29 @@ function init(schema) {
   });
 
 
+
+
+
   // Tile generation
   //ITCI elements
-  var rectIT = rectGen(svgIT, h, w, itci, divSizeIT, gapH, gapV, colors[0], false);
-  var textIT = textGen(svgIT, h, w, itci, divSizeIT, gapH, gapV, centerMargin);
+  rectGen(svgIT, h, w, itci, divSizeIT, gapH, gapV, colors[0], false);
+  textGen(svgIT, h, w, itci, divSizeIT, gapH, gapV, centerMargin);
   //Ground Handling
-  var rectGh = rectGen(svgGH, h, w, groundH, divSizeGH, gapH, gapV, colors[1], true);
-  var textGh = textGen(svgGH, h, w, groundH, divSizeGH, gapH, gapV, centerMargin);
-
-
+  rectGen(svgGH, h, w, groundH, divSizeGH, gapH, gapV, colors[1], true);
+  textGen(svgGH, h, w, groundH, divSizeGH, gapH, gapV, centerMargin);
   //Alliance elements
-  var rectAl = rectGen(svgAl, h, w, alliance, divSizeAl, gapH, gapV, colors[2], centerMargin);
-  var textAl = textGen(svgAl, h, w, alliance, divSizeAl, gapH, gapV, centerMargin);
+  rectGen(svgAl, h, w, alliance, divSizeAl, gapH, gapV, colors[2], centerMargin);
+  textGen(svgAl, h, w, alliance, divSizeAl, gapH, gapV, centerMargin);
   //SkyTeam elements
-  var rectST = rectGen(svgST, h, w, skyTeam, divSizeST, gapH, gapV, colors[3], centerMargin);
-  var textST = textGen(svgST, h, w, skyTeam, divSizeST, gapH, gapV, centerMargin);
-
+  rectGen(svgST, h, w, skyTeam, divSizeST, gapH, gapV, colors[3], centerMargin);
+  textGen(svgST, h, w, skyTeam, divSizeST, gapH, gapV, centerMargin);
   //Joint Venture elements
-  var rectJV = rectGen(svgJV, h, w, joinVen, divSizeJV, gapH, gapV, colors[4], centerMargin);
-  var textJV = textGen(svgJV, h, w, joinVen, divSizeJV, gapH, gapV, centerMargin);
+  rectGen(svgJV, h, w, joinVen, divSizeJV, gapH, gapV, colors[4], centerMargin);
+  textGen(svgJV, h, w, joinVen, divSizeJV, gapH, gapV, centerMargin);
 
   //info box
-  var rectInfo = svgInfo.append("g")
+  //var
+  rectInfo = svgInfo.append("g")
     .attr("class", "infoGroup")
     .append("rect")
     .attr("height", h)
@@ -257,26 +258,9 @@ function init(schema) {
     .attr("y", "50%")
     .attr("opacity", "0");
 
-
-
-
-
-
   //Indicates if the info box should appear
-  var appear = true;
-
-
-  //Find the Elements information
-  function getInfo(name) {
-
-    for (var x in schema) {
-      var pos;
-      if (schema[x].Name == name) {
-        pos = x;
-      }
-    }
-    return schema[pos];
-  }
+  //var
+  appear = true;
 
 
   var infoType;
@@ -284,15 +268,15 @@ function init(schema) {
 
   //Information box position
   var displayInfo = function(data) {
-
-    d3.selectAll(".infoType").remove();
-    infoTextGen(svgInfo, data, 590);
-    infoType = d3.selectAll(".infoType");
+    d3.selectAll(".infoType")
+      .remove();
+    infoTextGen(svgInfo, data, 600);
     d3.select(".infoTitle")
       .transition()
-      .delay(2019)
+      .delay(2000)
       .duration(500)
       .attr("opacity", "1");
+    infoType = d3.selectAll(".infoType");
     infoType.transition()
       .delay(function(d, i) {
         return i * 20 + 2000;
@@ -301,15 +285,14 @@ function init(schema) {
       .attr("opacity", "1");
     d3.select(".defText")
       .transition()
-      .delay(2502)
+      .delay(2500)
       .duration(500)
       .attr("opacity", "1");
-
 
     var titleVal = d3.selectAll(".titleVal")
       .transition()
       .delay(function(d, i) {
-        return i * 20 + 3001;
+        return i * 20 + 3000;
       })
       .duration(500)
       .attr("opacity", "1");
@@ -325,44 +308,34 @@ function init(schema) {
 
     //Defintion box
 
-    openInfoBox();
-
-  }
-
-  //Display box information
-  function openInfoBox() {
+    //Display box information
     rectInfo.transition()
       .duration(500)
       .attr("opacity", "1")
       .attr("fill", "#003366")
       .transition()
-      .delay(501)
+      .delay(500)
       .duration(500)
       .attr("y", ".5%")
       .transition()
-      .delay(1002)
+      .delay(1000)
       .duration(500)
       .attr("width", divSizeInfo - 10)
       .attr("x", ".5%")
       .transition()
-      .delay(1503)
+      .delay(1500)
       .duration(500)
       .attr("stroke", "#991933")
       .attr("stroke-width", "5px")
       .attr("height", $(".boxInfo").height() - 5);
     appear = false;
-  }
-
-
+  };
 
   function infoEventDisplay(e) {
-    var val = d3.select(e).attr("value");
-
     if (appear) {
-
       var textMatch = "#" + d3.select(e).attr("textMatch");
 
-      var disappearVal = .5;
+      var disappearVal = 0.5;
 
       //Fade elements out
       d3.selectAll(".elem")
@@ -382,11 +355,10 @@ function init(schema) {
         .transition()
         .style("opacity", "1");
       d3.select(textMatch)
+        .attr("class", "elemText")
         .transition()
         .style("opacity", "1");
-      displayInfo(getInfo(val));
-
-
+      displayInfo(_.find(schema, { Name: d3.select(e).attr("value") }));
     } else {
       //Fade elements in
       d3.selectAll(".elemGone")
@@ -399,13 +371,31 @@ function init(schema) {
         .style("opacity", "1");
       d3.selectAll(".elemTextGone")
         .attr("class", function(d) {
-          return d.Name + " elemText"
+          return d.Name + " elemText";
         })
         .transition()
         .duration(1000)
         .style("opacity", "1");
+
       //Close the information box
-      closeInfoBox();
+      rectInfo.transition()
+        .duration(1000)
+        .attr("opacity", "0")
+        .attr("height", h)
+        .attr("width", w)
+        .attr("x", "45%")
+        .attr("y", "50%")
+        .attr("opacity", "0")
+        .attr("stroke", "#003366");
+      infoType.transition()
+        .duration(100)
+        .attr("opacity", "0");
+      d3.select(".defText")
+        .transition()
+        .duration(100)
+        .attr("opacity", "0");
+
+      appear = true;
 
       /****Save this code may need later ****/
       //  infoVals.transition()
@@ -416,86 +406,52 @@ function init(schema) {
       // svgInfo.select(".infoValGroup").remove();
       svgInfo.select(".infoTitleGroup").remove();
       //  svgInfo.select(".infoSizes").remove();
-
-
     }
     keyDisplay(null);
-  } //infoEventDisplay
-
-  function closeInfoBox() {
-    //Close the information box
-    rectInfo.transition()
-      .duration(1001)
-      .attr("opacity", "0")
-      .attr("height", h)
-      .attr("width", w)
-      .attr("x", "45%")
-      .attr("y", "50%")
-      .attr("opacity", "0")
-      .attr("stroke", "#003366");
-    infoType.transition()
-      .duration(100)
-      .attr("opacity", "0");
-    d3.select(".defText")
-      .transition()
-      .duration(100)
-      .attr("opacity", "0")
-
-    appear = true;
   }
 
-
-
   $(document).ready(function() {
-    var rect;
-    var textMatch;
+    $(".elem").each(function(i, elem) {
+      var textMatch = "#" + d3.select(this).attr("textMatch");
+      var self = this;
+      $(textMatch).mouseenter(function() {
+        if (appear) {
+          d3.select(self)
+            .transition()
+            .style("opacity", ".5");
+        }
+      });
+      $(textMatch).mouseleave(function() {
+        if (appear) {
+          d3.select(self)
+            .transition()
+            .style("opacity", ".5");
+        }
+      });
+    });
 
     $(".elem").mouseenter(function() {
-
-      var disName = d3.select(this).attr("disName");
-      textMatch = "#" + d3.select(this).attr("textMatch");
-
+      var textMatch = "#" + d3.select(this).attr("textMatch");
       if (appear) {
-        disSecInfo(disName);
-        rect = this;
-        d3.select(rect)
+        var disName = d3.select(this).attr("disName");
+        //Gets the names of the elements and displays them in the key area
+        nameAndDef.transition()
+          .duration(100)
+          .attr("opacity", "0")
+          .delay(100)
+          .attr("opacity", "1")
+          .text(disName);
+
+        d3.select(this)
           .transition()
           .duration(200)
           .style("opacity", ".5");
-        //To prevent the element boxes from fading in and out when hovering over text
-        $(textMatch).mouseenter(function() {
-          d3.select(rect)
-            .transition()
-            .style("opacity", ".5");
-        });
-        $(textMatch).mouseleave(function() {
-          d3.select(rect)
-            .transition()
-            .style("opacity", ".5");
-        });
-      } else {
-
-        $(textMatch).mouseleave(function() {
-          d3.select(rect)
-            .transition()
-            .style("opacity", "1")
-        });
-        $(textMatch).mouseenter(function() {
-          d3.select(rect)
-            .transition()
-            .style("opacity", "1");
-        });
       }
-
     });
 
-
-
-
     $(".elem").mouseleave(function() {
-      var rect = this;
       if (appear) {
-        d3.select(rect)
+        d3.select(this)
           .transition()
           .duration(100)
           .style("opacity", "1");
@@ -503,33 +459,17 @@ function init(schema) {
           .transition()
           .style("opacity", "1");
       }
-
-
     });
 
+    $("#elements").mouseenter(function() {
+      keyDisplay(null);
+    });
 
-    $(".tableContainer").mouseleave(function() {
+    $("#elements").mouseleave(function() {
       keyDisplay(null);
       displayAllKeys();
-
     });
-    $(".tableContainer").mouseenter(function() {
-      keyDisplay(null);
-    });
-
-    $(document).click(function() {
-
-      // if(!appear){
-      //   closeInfoBox();
-      // }
-    });
-
-    $(".tablesPP").click(function() {
-      // if(!appear){
-      //    closeInfoBox();
-      // }
-
-    });
+    
 
     $(".infoType").click(function() {
       infoEventDisplay(this);

@@ -3,10 +3,9 @@
  */
 
 
-function infoTextGen(svg,data, containerHeight){
-
-    if(svg ==null || data == null || containerHeight == null){
-        console.error("Passed value is null")
+function infoTextGen(svg, data, containerHeight) {
+    if (arguments.length < 3){
+      console.error("Invalid data passed to infoTextGen")
     }
     var xPos = 10;
     var type = [

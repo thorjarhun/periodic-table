@@ -31,7 +31,6 @@ function rectGen(svg, height, width, dataG, size, gapH, gapV, color, centerM){
 
         var rect =
                      svg.append("g")
-                        .attr("class", "rectGroup")
                         .selectAll("rect")
                         .data(data)
                         .enter()
