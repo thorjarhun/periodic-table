@@ -1,0 +1,9 @@
+{
+  "name": "periodictable",
+  "version": "1.0.0",
+  "description": "The periodic table of Airline partners",
+  "author": "Caleb Wolfe caleb.wolfe@delta.com",
+  "contributors": [{
+  "name": "",
+  "email": "foo.bar@example.com"
+}]
