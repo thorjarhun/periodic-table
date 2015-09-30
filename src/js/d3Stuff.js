@@ -1,12 +1,13 @@
 /**
  * Created by Caleb's on 1/22/2015.
  */
-
+/*
 $.getJSON("data.json", function(data) {
   init(data);
 });
+*/
 
-function init(schema) {
+//function init(schema) {
   // comment to leak globals
   //var appear, rectInfo;
   
@@ -106,7 +107,6 @@ function init(schema) {
     .enter()
     .append("rect")
     .attr("class", function(d) {
-
       return "keys extra" + d;
     })
     .attr("height", h)
@@ -248,8 +248,7 @@ function init(schema) {
   textGen(svgJV, h, w, joinVen, divSizeJV, gapH, gapV, centerMargin);
 
   //info box
-  //var
-  rectInfo = svgInfo.append("g")
+  var rectInfo = svgInfo.append("g")
     .attr("class", "infoGroup")
     .append("rect")
     .attr("height", h)
@@ -259,8 +258,7 @@ function init(schema) {
     .attr("opacity", "0");
 
   //Indicates if the info box should appear
-  //var
-  appear = true;
+  var appear = true;
 
 
   var infoType;
@@ -500,4 +498,4 @@ function init(schema) {
       infoEventDisplay(this);
     });
   });
-}
+//}
