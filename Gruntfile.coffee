@@ -13,6 +13,7 @@ gruntFunction = (grunt) ->
                   livereload: LIVERELOAD_PORT
                   port: 8080
                   hostname: '0.0.0.0'
+                  open: true
 
         watch:
             all:
